@@ -29,12 +29,15 @@ public class ChessMatch {
         Position target = targetPosition.toPosition();
         validateSourcePosition(source);
         Piece capturedPiece = makeMove(source, target);
-        return (ChessPiece)capturedPiece;
+        return (ChessPiece) capturedPiece;
     }
 
     private void validateSourcePosition(Position position) {
         if (board.piece(position) == null) {
             throw new ChessException("No piece at " + position);
+        }
+        if (!board.piece(position).isThereAPossibleMove()) {
+            throw new ChessException("There is no possible move");
         }
     }
 
