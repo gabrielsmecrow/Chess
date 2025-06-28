@@ -2,10 +2,12 @@ package application;
 
 import BoardGame.Board;
 import BoardGame.Position;
+import Chess.ChessException;
 import Chess.ChessMatch;
 import Chess.ChessPiece;
 import Chess.ChessPosition;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -15,16 +17,24 @@ public class Main {
         ChessMatch match = new ChessMatch();
 
         while (true) {
-            UI.printBoard(match.getPieces());
-            System.out.println();
-            System.out.print("Source: ");
-            ChessPosition source = UI.readChessPosition(sc);
+            try {
+                UI.clearScreen();
+                UI.printBoard(match.getPieces());
+                System.out.println();
+                System.out.print("Source: ");
+                ChessPosition source = UI.readChessPosition(sc);
 
-            System.out.println();
-            System.out.print("Target: ");
-            ChessPosition target = UI.readChessPosition(sc);
+                System.out.println();
+                System.out.print("Target: ");
+                ChessPosition target = UI.readChessPosition(sc);
 
-            ChessPiece capturedPiece = match.performChessMove(source, target);
+
+                ChessPiece capturedPiece = match.performChessMove(source, target);
+            }
+            catch (ChessException | InputMismatchException e) {
+                System.out.println(e.getMessage());
+                sc.nextLine();
+            }
         }
     }
 }
